@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="LowPolyBoatGame"
+run/main_scene="uid://s1bvqpykpty4"
+config/features=PackedStringArray("4.4", "Forward Plus")
+config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="LowPolyBoatGame"
+
+[input]
+
+w={
+"deadzone": 0.2,
+"events": []
+}
+a={
+"deadzone": 0.2,
+"events": []
+}
+s={
+"deadzone": 0.2,
+"events": []
+}
+d={
+"deadzone": 0.2,
+"events": []
+}

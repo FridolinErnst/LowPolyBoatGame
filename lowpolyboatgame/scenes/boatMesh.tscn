@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bluapguiui4ky"]
+
+[ext_resource type="PackedScene" uid="uid://c3gopsoplq8u2" path="res://assets/low-poly_pirate_ship.glb" id="1_owydg"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_owydg")]

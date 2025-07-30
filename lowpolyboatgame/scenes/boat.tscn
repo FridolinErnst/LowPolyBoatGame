@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://mi8ksmg1ibt2"]
+
+[ext_resource type="PackedScene" uid="uid://bluapguiui4ky" path="res://scenes/boatMesh.tscn" id="1_0063d"]
+[ext_resource type="Script" uid="uid://dy8ene3jbnxcx" path="res://scripts/boat.gd" id="1_qyrje"]
+[ext_resource type="Script" uid="uid://myt831rt75ai" path="res://scenes/camera_3d.gd" id="3_lw6pk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0063d"]
+size = Vector3(31.66, 11.41, 11.415)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qyrje"]
+size = Vector3(16.935, 13.305, 11.75)
+
+[node name="Boat" type="Node3D"]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+script = ExtResource("1_qyrje")
+
+[node name="Sketchfab_Scene" parent="RigidBody3D" instance=ExtResource("1_0063d")]
+
+[node name="CollisionShape3DHull" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9041, 0)
+shape = SubResource("BoxShape3D_0063d")
+
+[node name="CollisionShape3DMast" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.88587, 13.0331, 0)
+shape = SubResource("BoxShape3D_qyrje")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.45865, 0.888617, 0, -0.888617, 0.45865, 0, 140.5, 57.685)
+current = true
+script = ExtResource("3_lw6pk")
+target_path = NodePath("..")
+follow_height = 140.5
