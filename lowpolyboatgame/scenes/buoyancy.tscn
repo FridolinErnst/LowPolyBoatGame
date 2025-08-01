@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://dgngkjm77q7sf"]
+
+[ext_resource type="Shader" uid="uid://crmwlh5kvvr0b" path="res://scripts/buoyancy.gdshader" id="1_n0muo"]
+[ext_resource type="Script" uid="uid://b4ksnhoqgmj3r" path="res://scripts/water.gd" id="2_6nmjt"]
+[ext_resource type="PackedScene" uid="uid://vghcaj2rnrop" path="res://scenes/floatingObject.tscn" id="3_vf812"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x3xe3"]
+render_priority = 0
+shader = ExtResource("1_n0muo")
+shader_parameter/wave_a = Vector3(1, 0.4, 10)
+shader_parameter/wave_a_dir = Vector2(1, 0)
+shader_parameter/wave_b = Vector3(1, 0.25, 20)
+shader_parameter/wave_b_dir = Vector2(1, 1)
+shader_parameter/wave_c = Vector3(1, 0.15, 1)
+shader_parameter/wave_c_dir = Vector2(1, 0.5)
+shader_parameter/time = 0.0
+shader_parameter/height_scale = 1.0
+shader_parameter/beer_factor = 0.8
+shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
+shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
+shader_parameter/_DepthMaxDistance = 1.0
+shader_parameter/_DepthFactor = 1.0
+shader_parameter/water_colour = Color(0, 0, 0, 1)
+shader_parameter/deep_water_colour = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6nmjt"]
+material = SubResource("ShaderMaterial_x3xe3")
+size = Vector2(1000, 1000)
+subdivide_width = 20
+subdivide_depth = 20
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vf812"]
+render_priority = 0
+shader = ExtResource("1_n0muo")
+shader_parameter/wave_a = Vector3(1, 0.4, 10)
+shader_parameter/wave_a_dir = Vector2(1, 0)
+shader_parameter/wave_b = Vector3(1, 0.25, 20)
+shader_parameter/wave_b_dir = Vector2(1, 1)
+shader_parameter/wave_c = Vector3(1, 0.15, 1)
+shader_parameter/wave_c_dir = Vector2(1, 0.5)
+shader_parameter/time = 0.0
+shader_parameter/height_scale = 1.0
+shader_parameter/beer_factor = 0.8
+shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
+shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
+shader_parameter/_DepthMaxDistance = 1.0
+shader_parameter/_DepthFactor = 1.0
+shader_parameter/water_colour = Color(0, 0, 0, 1)
+shader_parameter/deep_water_colour = Color(0, 0, 0, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vf812"]
+
+[sub_resource type="Sky" id="Sky_x3xe3"]
+sky_material = SubResource("ProceduralSkyMaterial_vf812")
+radiance_size = 1
+
+[sub_resource type="Environment" id="Environment_vf812"]
+background_mode = 2
+background_energy_multiplier = 3.17
+sky = SubResource("Sky_x3xe3")
+ambient_light_source = 3
+ambient_light_color = Color(0.558705, 0.473412, 1, 1)
+ambient_light_energy = 1.67
+reflected_light_source = 2
+
+[node name="Buoyancy" type="Node"]
+
+[node name="Water" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_6nmjt")
+surface_material_override/0 = SubResource("ShaderMaterial_vf812")
+script = ExtResource("2_6nmjt")
+
+[node name="FloatingObject" parent="." instance=ExtResource("3_vf812")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 298.099, 443.883, -288.046)
+light_energy = 1.528
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vf812")

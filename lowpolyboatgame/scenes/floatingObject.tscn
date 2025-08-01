@@ -1,0 +1,101 @@
+[gd_scene load_steps=7 format=3 uid="uid://vghcaj2rnrop"]
+
+[ext_resource type="Script" uid="uid://dotdduadheo6r" path="res://scripts/boatBuoyancy.gd" id="1_0b1y2"]
+[ext_resource type="PackedScene" uid="uid://bluapguiui4ky" path="res://scenes/boatMesh.tscn" id="2_g53hq"]
+[ext_resource type="Script" uid="uid://myt831rt75ai" path="res://scripts/camera_3d.gd" id="3_c8pw6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sjkqo"]
+size = Vector3(31.66, 11.41, 11.415)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mfs2n"]
+size = Vector3(16.935, 13.305, 11.75)
+
+[sub_resource type="SphereMesh" id="SphereMesh_g53hq"]
+radius = 2.0
+height = 4.0
+
+[node name="FloatingObject" type="Node"]
+
+[node name="boatBuoyancy" type="Node3D" parent="."]
+script = ExtResource("1_0b1y2")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="boatBuoyancy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0885782, -1.64117, -3.36415)
+mass = 10.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -4, 0)
+
+[node name="Sketchfab_Scene" parent="boatBuoyancy/RigidBody3D" instance=ExtResource("2_g53hq")]
+
+[node name="CollisionShape3DHull" type="CollisionShape3D" parent="boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9041, 0)
+shape = SubResource("BoxShape3D_sjkqo")
+
+[node name="CollisionShape3DMast" type="CollisionShape3D" parent="boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.88587, 13.0331, 0)
+shape = SubResource("BoxShape3D_mfs2n")
+
+[node name="Camera3D" type="Camera3D" parent="boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.45865, 0.888617, 0, -0.888617, 0.45865, 0, 140.5, 57.685)
+current = true
+script = ExtResource("3_c8pw6")
+target_path = NodePath("..")
+follow_height = 140.5
+
+[node name="ProbeContainer" type="Node3D" parent="boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.76634, 0)
+
+[node name="Marker3D" type="Marker3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.7, 7)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+
+[node name="Marker3D2" type="Marker3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.7, -7)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D3" type="Marker3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.7, -7)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D4" type="Marker3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.7, 7)
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D5" type="Marker3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8252, 0.698596, -0.00635546)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, -0.81199)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D6" type="Marker3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D7" type="Marker3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6365, 0.7, 0)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")

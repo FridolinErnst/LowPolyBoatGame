@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bluapguiui4ky" path="res://scenes/boatMesh.tscn" id="1_0063d"]
 [ext_resource type="Script" uid="uid://dy8ene3jbnxcx" path="res://scripts/boat.gd" id="1_qyrje"]
-[ext_resource type="Script" uid="uid://myt831rt75ai" path="res://scenes/camera_3d.gd" id="3_lw6pk"]
+[ext_resource type="Script" uid="uid://myt831rt75ai" path="res://scripts/camera_3d.gd" id="3_lw6pk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0063d"]
 size = Vector3(31.66, 11.41, 11.415)
