@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://vghcaj2rnrop"]
+[gd_scene load_steps=9 format=3 uid="uid://vghcaj2rnrop"]
 
 [ext_resource type="Script" uid="uid://dotdduadheo6r" path="res://scripts/boatBuoyancy.gd" id="1_0b1y2"]
 [ext_resource type="Script" uid="uid://b47xr6pflxbp2" path="res://scenes/boat_movement.gd" id="2_c8pw6"]
 [ext_resource type="PackedScene" uid="uid://bluapguiui4ky" path="res://scenes/boatMesh.tscn" id="2_g53hq"]
 [ext_resource type="Script" uid="uid://myt831rt75ai" path="res://scripts/camera_3d.gd" id="3_c8pw6"]
+[ext_resource type="PackedScene" uid="uid://busi8ch1sqx7k" path="res://scenes/AimingVisuals.tscn" id="5_sjkqo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sjkqo"]
 size = Vector3(31.66, 11.41, 11.415)
@@ -101,3 +102,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6365, 0.7, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 mesh = SubResource("SphereMesh_g53hq")
 skeleton = NodePath("../../Marker3D")
+
+[node name="AimingVisuals" parent="boatBuoyancy/RigidBody3D" instance=ExtResource("5_sjkqo")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 3, -9)
+
+[node name="AimingVisuals2" parent="boatBuoyancy/RigidBody3D" instance=ExtResource("5_sjkqo")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.006, 3, 9)

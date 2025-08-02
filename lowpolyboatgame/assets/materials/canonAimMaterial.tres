@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bx7edusbqfqkb"]
+
+[ext_resource type="Shader" uid="uid://w463ncmyc8o1" path="res://scripts/CanonAimShader.gdshader" id="1_f66fl"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_f66fl")
