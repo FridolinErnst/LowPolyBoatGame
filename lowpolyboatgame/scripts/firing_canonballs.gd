@@ -4,6 +4,24 @@ extends MeshInstance3D
 @export var cannonball_speed: float = 30.0 # should equal speed?
 
 # clicking the left mouse button activates attack hitbox, WASD can then be used to aim
+# right mouse button to shoot
+# code sollte vlt von den canonball shooting getrennt werden
+# TODO 
+# 	make them hit other boats or objects, for that see _check_collision()
+# 	make the canonballs have proper mass and still match indications
+#	boats should move when hit by canonball, if that does not work when increasing canonball mass 
+#		then apply force at point of impact from where they came
+#	add sound, fire or explosion when firing and on impact, canon smoke, screen shake when getting hit by a lot of canons
+#	figure out how 2 controllers can play or one controller and one keyboard and mouse
+# 	add cooldown between shots
+# 	addcontrolls vorschlag:
+# 		linker joystick aim, 
+# 		rechter joystick movement,
+# 		unteren shoulder buttons breit und schmal vom aim
+# 		oberen shoulder button sind schiessen
+# 		pfeiltasten sind weapon wechseln
+# 		wenn man den linken joystick bewegt dsnn soll sofort das aimen erscheinen und es soll immer zurueck defaulten zu einem standart aim wenn man die unteren shoulder buttons laenger los laesst
+# 		und aimen mit linkem joystick kann entweder immer relativ von dem bot ausgehen oder fixiert sein. aim erscheint nur in die richtung in die geaimt wird
 
 @export var trail_length: float = 30.0
 @export var resolution: int = 20
@@ -179,6 +197,10 @@ func set_aim_direction(dir: Vector3):
 	_build_curve()
 	_update_mesh()
 
+
+#should get these variables as input or declared at top and exported or both
+# spawns canonballs with individual offsets so it looks more realistic
+# spawns them at the aiming origin
 func _shoot_cannonball():
 	if cannonball_scene == null:
 		push_error("Cannonball scene not assigned in Inspector!")

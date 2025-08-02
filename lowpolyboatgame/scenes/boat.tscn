@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://mi8ksmg1ibt2"]
+[gd_scene load_steps=6 format=3 uid="uid://x5j1q83ykn2o"]
 
 [ext_resource type="PackedScene" uid="uid://bluapguiui4ky" path="res://scenes/boatMesh.tscn" id="1_0063d"]
 [ext_resource type="Script" uid="uid://dy8ene3jbnxcx" path="res://scripts/boat.gd" id="1_qyrje"]
