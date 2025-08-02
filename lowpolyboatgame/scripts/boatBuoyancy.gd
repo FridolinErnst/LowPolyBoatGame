@@ -1,5 +1,8 @@
 extends Node3D
 
+
+# maybe change and make buoyancy more like in this video: https://www.youtube.com/watch?v=_R2KDcAp1YQ
+
 @export var float_force := 1
 @onready var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var boat = $RigidBody3D
