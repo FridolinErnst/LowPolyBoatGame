@@ -25,27 +25,27 @@ max_health = 15
 metadata/_custom_type_script = "uid://dp0slde1b2iy2"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.2755)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -57.6165)
+collision_layer = 4
+collision_mask = 7
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.66978, 45.3557)
 mesh = SubResource("CylinderMesh_7ykc4")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_np7qd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 5.68115, 45.4239)
+transform = Transform3D(38.0336, 0, 0, 0, 38.0336, 0, 0, 0, 38.0336, 0, 0, 0)
 shape = SubResource("CylinderShape3D_pu3yx")
 
 [node name="HurtBox" type="Area3D" parent="StaticBody3D" node_paths=PackedStringArray("health")]
-collision_layer = 0
 collision_mask = 7
 script = ExtResource("1_v6s2v")
 health = NodePath("../../Health")
 metadata/_custom_type_script = "uid://cyu7syr7vp7gj"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/HurtBox"]
-transform = Transform3D(21.5, 0, 0, 0, 21.5, 0, 0, 0, 21.5, 0, 5.68115, 45.4239)
+transform = Transform3D(43.3829, 0, 0, 0, 43.3829, 0, 0, 0, 43.3829, 0, 0, 0)
 shape = SubResource("CylinderShape3D_pu3yx")
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]

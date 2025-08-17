@@ -2,28 +2,13 @@
 
 [ext_resource type="Script" uid="uid://8xnivdear3os" path="res://scripts/firing_canonballs.gd" id="1_53byj"]
 [ext_resource type="PackedScene" uid="uid://g23ebgru1xoe" path="res://scenes/canonball.tscn" id="2_2ub8b"]
-
-[sub_resource type="GDScript" id="GDScript_n7jyo"]
-script/source = "extends Node3D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
+[ext_resource type="Resource" uid="uid://dcragigbcic2o" path="res://scripts/Resources/canon_standard.tres" id="3_2ub8b"]
 
 [node name="firing_canonballs" type="Node3D"]
-script = SubResource("GDScript_n7jyo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 script = ExtResource("1_53byj")
 cannonball_scene = ExtResource("2_2ub8b")
+trajectory_profile = ExtResource("3_2ub8b")
 resolution = 60
-width_start = 10.0
-width_end = 1.0
 aim_up_limit = 60.0

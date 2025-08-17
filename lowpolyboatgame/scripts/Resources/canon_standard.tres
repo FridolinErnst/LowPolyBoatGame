@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TrajectoryProfile" load_steps=2 format=3 uid="uid://dcragigbcic2o"]
+
+[ext_resource type="Script" uid="uid://byu5yna1rrnsc" path="res://scripts/Resources/TrajectoryProfile.gd" id="1_fqokm"]
+
+[resource]
+script = ExtResource("1_fqokm")
+gravity = -9.8
+speed = 80.0
+trail_length = 30.0
+width_start = 10.0
+width_end = 0.1
+color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://byu5yna1rrnsc"
