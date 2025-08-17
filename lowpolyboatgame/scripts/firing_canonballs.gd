@@ -51,6 +51,11 @@ var default_angle := Vector3(1, 0, 0)
 var aim_dir := Vector3(1, 0, 0) # actual working angle
 
 var curve := Curve3D.new()
+
+#track aim so we only update when it changes
+var last_aim_dir: Vector3
+
+
 #endregion
 
 
@@ -81,7 +86,11 @@ func _physics_process(delta):
 		pitch_input += 1
 	if Input.is_action_pressed("move_down"):   # S
 		pitch_input -= 1
-
+	
+	# if no input we don't calculate further
+	if yaw_input == 0.0 && pitch_input == 0.0:
+		return
+		
 	# --- Update yaw ---
 	if yaw_input != 0.0:
 		yaw += yaw_input * aim_speed * delta
@@ -123,16 +132,19 @@ func _build_curve():
 		if position.y < start_height + vertical_rendering_height_end:
 			break
 
-	curve.bake_interval = trail_length / float(resolution * 3)
+	curve.bake_interval = trail_length / float(resolution)
 
 func _update_mesh():
 	var st = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 
 	var baked_points = curve.get_baked_points()
+	
+	
 	if baked_points.size() < 2:
 		mesh = null
 		return
+
 
 	for i in range(baked_points.size() - 1):
 		var t1 = float(i) / float(baked_points.size() - 1)

@@ -25,7 +25,6 @@ func _ready():
 	update_wave_parameters()
 
 func _physics_process(delta):
-	var start := Time.get_ticks_usec()  # microseconds since engine start
 
 	time += delta
 	submerged = false
@@ -37,8 +36,6 @@ func _physics_process(delta):
 		if depth > 0:
 			submerged = true
 			apply_buoyancy_force(p, depth)
-	var duration := Time.get_ticks_usec() - start
-	print("physics_process() took %dus" % duration)#
 	
 func update_wave_parameters():
 	if water_plane == null:

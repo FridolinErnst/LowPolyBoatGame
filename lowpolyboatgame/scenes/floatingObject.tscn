@@ -1,11 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://vghcaj2rnrop"]
+[gd_scene load_steps=9 format=3 uid="uid://vghcaj2rnrop"]
 
 [ext_resource type="Script" uid="uid://dotdduadheo6r" path="res://scripts/boatBuoyancy.gd" id="1_0b1y2"]
-<<<<<<< HEAD
-=======
-[ext_resource type="Script" uid="uid://dp0slde1b2iy2" path="res://scripts/health.gd" id="1_mfs2n"]
-[ext_resource type="Script" uid="uid://b47xr6pflxbp2" path="res://scripts/boat_movement.gd" id="2_c8pw6"]
->>>>>>> b6bd5cfbc8bb6b38957f36c9d663ad01bd43df24
 [ext_resource type="PackedScene" uid="uid://bluapguiui4ky" path="res://scenes/boatMesh.tscn" id="2_g53hq"]
 [ext_resource type="Script" uid="uid://8rhyls2wvsvd" path="res://scripts/player_movement/boat_movement_joystick_player1.gd" id="2_sjkqo"]
 [ext_resource type="Script" uid="uid://myt831rt75ai" path="res://scripts/camera_3d.gd" id="3_c8pw6"]
@@ -22,9 +17,6 @@ radius = 2.0
 height = 4.0
 
 [node name="FloatingObject" type="Node"]
-
-[node name="Health" type="Node" parent="."]
-script = ExtResource("1_mfs2n")
 
 [node name="boatBuoyancy" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.5311, 0)
