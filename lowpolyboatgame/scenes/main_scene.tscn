@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://dgngkjm77q7sf"]
+[gd_scene load_steps=11 format=3 uid="uid://dgngkjm77q7sf"]
 
 [ext_resource type="Shader" uid="uid://crmwlh5kvvr0b" path="res://scripts/buoyancy.gdshader" id="1_7ykc4"]
 [ext_resource type="Script" uid="uid://b4ksnhoqgmj3r" path="res://scripts/water.gd" id="2_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://vghcaj2rnrop" path="res://scenes/floatingObject.tscn" id="3_gubc5"]
+[ext_resource type="PackedScene" uid="uid://cgggjuva34f5g" path="res://scenes/training_dummy.tscn" id="4_pu3yx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x3xe3"]
 render_priority = 0
@@ -63,15 +64,6 @@ ambient_light_color = Color(0.558705, 0.473412, 1, 1)
 ambient_light_energy = 1.67
 reflected_light_source = 2
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_7ykc4"]
-top_radius = 10.0
-bottom_radius = 10.0
-height = 15.0
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_pu3yx"]
-height = 0.75708
-radius = 0.500977
-
 [node name="main_scene" type="Node"]
 
 [node name="Water" type="MeshInstance3D" parent="."]
@@ -88,13 +80,4 @@ light_energy = 1.528
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vf812")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.66978, 45.3557)
-mesh = SubResource("CylinderMesh_7ykc4")
-skeleton = NodePath("")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 5.68115, 45.4239)
-shape = SubResource("CylinderShape3D_pu3yx")
+[node name="TrainingDummy" parent="." instance=ExtResource("4_pu3yx")]

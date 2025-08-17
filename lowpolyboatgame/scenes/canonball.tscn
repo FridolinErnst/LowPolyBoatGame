@@ -1,10 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://g23ebgru1xoe"]
+[gd_scene load_steps=6 format=3 uid="uid://g23ebgru1xoe"]
 
 [ext_resource type="Script" uid="uid://b8pu5jgfeuc8k" path="res://scripts/canonball.gd" id="1_adnjr"]
+[ext_resource type="Script" uid="uid://c2lpwf4vwsic6" path="res://scripts/hitbox.gd" id="2_vi1ub"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tqm6s"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_53ghl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ck37a"]
+albedo_color = Color(0.212305, 0.212305, 0.212305, 1)
+metallic = 0.5
 
 [node name="Canonball" type="RigidBody3D"]
 mass = 0.001
@@ -18,3 +23,13 @@ debug_color = Color(0, 0.00236113, 0.00332057, 0.42)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 mesh = SubResource("SphereMesh_53ghl")
+surface_material_override/0 = SubResource("StandardMaterial3D_ck37a")
+
+[node name="HitBox" type="Area3D" parent="."]
+collision_mask = 0
+script = ExtResource("2_vi1ub")
+metadata/_custom_type_script = "uid://c2lpwf4vwsic6"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+shape = SubResource("SphereShape3D_tqm6s")
+debug_color = Color(0, 0.00236113, 0.00332057, 0.42)
