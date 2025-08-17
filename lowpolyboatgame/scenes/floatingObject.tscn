@@ -16,7 +16,7 @@ size = Vector3(16.935, 13.305, 11.75)
 radius = 2.0
 height = 4.0
 
-[node name="FloatingObject" type="Node"]
+[node name="FloatingObject" type="Node3D"]
 
 [node name="boatBuoyancy" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.5311, 0)
