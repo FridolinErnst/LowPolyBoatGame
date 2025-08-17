@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgggjuva34f5g"]
+[gd_scene load_steps=9 format=3 uid="uid://cgggjuva34f5g"]
 
 [ext_resource type="Script" uid="uid://efxdr1wpft23" path="res://scripts/training_dummy.gd" id="1_np7qd"]
 [ext_resource type="Script" uid="uid://cyu7syr7vp7gj" path="res://scripts/hurtbox.gd" id="1_v6s2v"]
 [ext_resource type="Script" uid="uid://dp0slde1b2iy2" path="res://scripts/health.gd" id="2_444kd"]
+[ext_resource type="PackedScene" uid="uid://y0jcryqxgjc3" path="res://scenes/healthbar.tscn" id="4_444kd"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_7ykc4"]
 top_radius = 10.0
@@ -16,6 +17,9 @@ albedo_color = Color(0.386648, 0.210333, 0.120793, 1)
 height = 0.75708
 radius = 0.500977
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_o7ju8"]
+viewport_path = NodePath("SubViewport")
+
 [node name="TrainingDummy" type="Node"]
 script = ExtResource("1_np7qd")
 
@@ -25,27 +29,37 @@ max_health = 15
 metadata/_custom_type_script = "uid://dp0slde1b2iy2"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.2755)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.66978, 45.3557)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.67, 0)
 mesh = SubResource("CylinderMesh_7ykc4")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_np7qd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 5.68115, 45.4239)
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 5.681, 0)
 shape = SubResource("CylinderShape3D_pu3yx")
 
 [node name="HurtBox" type="Area3D" parent="StaticBody3D" node_paths=PackedStringArray("health")]
-collision_layer = 0
 collision_mask = 7
 script = ExtResource("1_v6s2v")
 health = NodePath("../../Health")
 metadata/_custom_type_script = "uid://cyu7syr7vp7gj"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/HurtBox"]
-transform = Transform3D(21.5, 0, 0, 0, 21.5, 0, 0, 0, 21.5, 0, 5.68115, 45.4239)
+transform = Transform3D(21.5, 0, 0, 0, 21.5, 0, 0, 0, 21.5, 0, 5.681, 0)
 shape = SubResource("CylinderShape3D_pu3yx")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(6000, 1000)
+
+[node name="Healthbar" parent="SubViewport" instance=ExtResource("4_444kd")]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.331848)
+billboard = 1
+texture = SubResource("ViewportTexture_o7ju8")
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
