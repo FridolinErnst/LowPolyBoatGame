@@ -6,7 +6,6 @@ signal received_damage(damage: int)
 
 
 @export var health: Health
-@onready var hud = get_node("HUD")
 
 
 func _ready():
