@@ -45,7 +45,7 @@ health = NodePath("../../Health")
 metadata/_custom_type_script = "uid://cyu7syr7vp7gj"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/HurtBox"]
-transform = Transform3D(22, 0, 0, 0, 22, 0, 0, 0, 22, 0, 5.68115, 45.4239)
+transform = Transform3D(20.5, 0, 0, 0, 20.5, 0, 0, 0, 20.5, 0, 5.68115, 45.4239)
 shape = SubResource("CylinderShape3D_pu3yx")
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
