@@ -1,8 +1,24 @@
 extends RigidBody3D
 
+@export var player_index : int = 3
+
+enum InputType {
+	MOUSE_KEYBOARD, # 0
+	CONTROLLER,	 	# 1
+	TOUCH			# 2
+}
+
+signal input_type_changed(new_type)
+
+var current_input_type: InputType:
+	set(value):
+		if current_input_type != value:
+			current_input_type = value
+			input_type_changed.emit(value)
+	get:
+		return current_input_type
 #this indicates the player or controller/device used for this script
 #positiv integer, should be the same as in script name
-@export var player_index = 1
 
 @export var forward_force: float = 400.0 # how much force pushes it forward
 @export var backward_force: float = 80.0 # how much force pushes it backward
@@ -15,8 +31,36 @@ extends RigidBody3D
 @export var base_turning_speed: float = 0.7 # so boat can turn even when slow, but not when too slow
 @export var turning_speed_threshold: float = 0.027 # when boat is too slow deny turning
 
-func _physics_process(delta: float) -> void:
+## Called when there is an input event.
+func _input(event: InputEvent) -> void:
+
+	# Check if the input is a keyboard or mouse event
+	if event is InputEventKey or event is InputEventMouse:
+
+		# Set the current input type to Mouse and Keyboard
+		current_input_type = InputType.MOUSE_KEYBOARD
+
+	# Check if the input is a controller event
+	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+
+		# Set the current input type to Controller
+		current_input_type = InputType.CONTROLLER
+
+	# Check if the input is a touch event
+	elif event is InputEventScreenTouch or event is InputEventScreenDrag:
+
+		# Set the current input type to Touch
+		current_input_type = InputType.TOUCH
+
 	
+func _physics_process(delta: float) -> void:
+		
+	if current_input_type == InputType.MOUSE_KEYBOARD:
+		handle_mouse_keyboard_input()
+		return
+	
+	
+func handle_mouse_keyboard_input() -> void:
 	# Forward / backwards
 	if Input.is_action_pressed("ui_up"): 
 		apply_central_force(global_transform.basis.x * forward_force)

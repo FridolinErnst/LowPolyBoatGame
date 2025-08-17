@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://vghcaj2rnrop"]
 
 [ext_resource type="Script" uid="uid://dotdduadheo6r" path="res://scripts/boatBuoyancy.gd" id="1_0b1y2"]
-[ext_resource type="Script" uid="uid://b47xr6pflxbp2" path="res://scripts/boat_movement.gd" id="2_c8pw6"]
 [ext_resource type="PackedScene" uid="uid://bluapguiui4ky" path="res://scenes/boatMesh.tscn" id="2_g53hq"]
+[ext_resource type="Script" uid="uid://8rhyls2wvsvd" path="res://scripts/player_movement/boat_movement_joystick_player1.gd" id="2_sjkqo"]
 [ext_resource type="Script" uid="uid://myt831rt75ai" path="res://scripts/camera_3d.gd" id="3_c8pw6"]
 [ext_resource type="PackedScene" uid="uid://busi8ch1sqx7k" path="res://scenes/firing_canonballs.tscn" id="5_sjkqo"]
 
@@ -19,6 +19,7 @@ height = 4.0
 [node name="FloatingObject" type="Node"]
 
 [node name="boatBuoyancy" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.5311, 0)
 script = ExtResource("1_0b1y2")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="boatBuoyancy"]
@@ -26,7 +27,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0885782, -1.64117, -3.3641
 mass = 10.0
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -4, 0)
-script = ExtResource("2_c8pw6")
+script = ExtResource("2_sjkqo")
 
 [node name="Sketchfab_Scene" parent="boatBuoyancy/RigidBody3D" instance=ExtResource("2_g53hq")]
 

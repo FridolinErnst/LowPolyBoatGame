@@ -1,3 +1,5 @@
+#deprecated
+
 extends RigidBody3D
 
 @export var engine_force: float = 200.0

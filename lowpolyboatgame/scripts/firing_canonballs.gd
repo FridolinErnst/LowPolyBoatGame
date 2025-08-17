@@ -23,6 +23,8 @@ extends MeshInstance3D
 # 		wenn man den linken joystick bewegt dsnn soll sofort das aimen erscheinen und es soll immer zurueck defaulten zu einem standart aim wenn man die unteren shoulder buttons laenger los laesst
 # 		und aimen mit linkem joystick kann entweder immer relativ von dem bot ausgehen oder fixiert sein. aim erscheint nur in die richtung in die geaimt wird
 
+#region variables
+
 @export var trail_length: float = 30.0
 @export var resolution: int = 20
 @export var width_start: float = 1.5
@@ -49,6 +51,8 @@ var default_angle := Vector3(1, 0, 0)
 var aim_dir := Vector3(1, 0, 0) # actual working angle
 
 var curve := Curve3D.new()
+#endregion
+
 
 func _ready():
 	visible = false

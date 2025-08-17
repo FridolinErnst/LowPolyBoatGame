@@ -8,7 +8,7 @@ extends Node3D
 @onready var boat = $RigidBody3D
 @onready var probes = $RigidBody3D/ProbeContainer.get_children()
 @onready var physics_material = PhysicsMaterial.new()
-@onready var water_plane: MeshInstance3D = get_node("/root/Buoyancy/Water")
+@onready var water_plane: MeshInstance3D = get_node("/root/multiplayer/Water")
 
 var wave_a = Vector3(1.0, 0.4, 10.0)
 var wave_a_dir = Vector2(1.0, 0.0)
@@ -25,6 +25,8 @@ func _ready():
 	update_wave_parameters()
 
 func _physics_process(delta):
+	var start := Time.get_ticks_usec()  # microseconds since engine start
+
 	time += delta
 	submerged = false
 	update_wave_parameters() # Ensure parameters are up-to-date
@@ -35,7 +37,8 @@ func _physics_process(delta):
 		if depth > 0:
 			submerged = true
 			apply_buoyancy_force(p, depth)
-
+	var duration := Time.get_ticks_usec() - start
+	print("physics_process() took %dus" % duration)#
 	
 func update_wave_parameters():
 	if water_plane == null:

@@ -1,0 +1,269 @@
+[gd_scene load_steps=18 format=3 uid="uid://dpjcj233hhx1f"]
+
+[ext_resource type="Shader" uid="uid://crmwlh5kvvr0b" path="res://scripts/buoyancy.gdshader" id="1_pjkx2"]
+[ext_resource type="Script" uid="uid://b4ksnhoqgmj3r" path="res://scripts/water.gd" id="2_4vwpp"]
+[ext_resource type="PackedScene" uid="uid://vghcaj2rnrop" path="res://scenes/floatingObject.tscn" id="3_36d77"]
+[ext_resource type="Script" uid="uid://dotdduadheo6r" path="res://scripts/boatBuoyancy.gd" id="4_a6lh4"]
+[ext_resource type="Script" uid="uid://c5rb0y0ehhn8k" path="res://scripts/player_movement/boat_movement_joystick_player2.gd" id="5_gpc4n"]
+[ext_resource type="PackedScene" uid="uid://bluapguiui4ky" path="res://scenes/boatMesh.tscn" id="6_r3wt4"]
+[ext_resource type="PackedScene" uid="uid://busi8ch1sqx7k" path="res://scenes/firing_canonballs.tscn" id="7_nrdfo"]
+[ext_resource type="Script" uid="uid://b37afudvth876" path="res://scripts/player_movement/boat_controller_mouse.gd" id="8_gpc4n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x3xe3"]
+render_priority = 0
+shader = ExtResource("1_pjkx2")
+shader_parameter/wave_a = Vector3(1, 0.4, 10)
+shader_parameter/wave_a_dir = Vector2(1, 0)
+shader_parameter/wave_b = Vector3(1, 0.25, 20)
+shader_parameter/wave_b_dir = Vector2(1, 1)
+shader_parameter/wave_c = Vector3(1, 0.15, 1)
+shader_parameter/wave_c_dir = Vector2(1, 0.5)
+shader_parameter/time = 0.0
+shader_parameter/height_scale = 1.0
+shader_parameter/beer_factor = 0.8
+shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
+shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
+shader_parameter/_DepthMaxDistance = 1.0
+shader_parameter/_DepthFactor = 1.0
+shader_parameter/water_colour = Color(0, 0, 0, 1)
+shader_parameter/deep_water_colour = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6nmjt"]
+material = SubResource("ShaderMaterial_x3xe3")
+size = Vector2(1000, 1000)
+subdivide_width = 20
+subdivide_depth = 20
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vf812"]
+render_priority = 0
+shader = ExtResource("1_pjkx2")
+shader_parameter/wave_a = Vector3(1, 0.4, 10)
+shader_parameter/wave_a_dir = Vector2(1, 0)
+shader_parameter/wave_b = Vector3(1, 0.25, 20)
+shader_parameter/wave_b_dir = Vector2(1, 1)
+shader_parameter/wave_c = Vector3(1, 0.15, 1)
+shader_parameter/wave_c_dir = Vector2(1, 0.5)
+shader_parameter/time = 0.0
+shader_parameter/height_scale = 1.0
+shader_parameter/beer_factor = 0.8
+shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
+shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
+shader_parameter/_DepthMaxDistance = 1.0
+shader_parameter/_DepthFactor = 1.0
+shader_parameter/water_colour = Color(0, 0, 0, 1)
+shader_parameter/deep_water_colour = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sjkqo"]
+size = Vector3(31.66, 11.41, 11.415)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mfs2n"]
+size = Vector3(16.935, 13.305, 11.75)
+
+[sub_resource type="SphereMesh" id="SphereMesh_g53hq"]
+radius = 2.0
+height = 4.0
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vf812"]
+
+[sub_resource type="Sky" id="Sky_x3xe3"]
+sky_material = SubResource("ProceduralSkyMaterial_vf812")
+radiance_size = 1
+
+[sub_resource type="Environment" id="Environment_vf812"]
+background_mode = 2
+background_energy_multiplier = 3.17
+sky = SubResource("Sky_x3xe3")
+ambient_light_source = 3
+ambient_light_color = Color(0.558705, 0.473412, 1, 1)
+ambient_light_energy = 1.67
+reflected_light_source = 2
+
+[node name="multiplayer" type="Node"]
+
+[node name="Water" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_6nmjt")
+surface_material_override/0 = SubResource("ShaderMaterial_vf812")
+script = ExtResource("2_4vwpp")
+
+[node name="player1" parent="." instance=ExtResource("3_36d77")]
+
+[node name="player2" type="Node" parent="."]
+
+[node name="boatBuoyancy" type="Node3D" parent="player2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.5311, 49.8842)
+script = ExtResource("4_a6lh4")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="player2/boatBuoyancy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0885782, -1.64117, -3.36415)
+mass = 10.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -4, 0)
+script = ExtResource("5_gpc4n")
+
+[node name="Sketchfab_Scene" parent="player2/boatBuoyancy/RigidBody3D" instance=ExtResource("6_r3wt4")]
+
+[node name="CollisionShape3DHull" type="CollisionShape3D" parent="player2/boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9041, 0)
+shape = SubResource("BoxShape3D_sjkqo")
+
+[node name="CollisionShape3DMast" type="CollisionShape3D" parent="player2/boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.88587, 13.0331, 0)
+shape = SubResource("BoxShape3D_mfs2n")
+
+[node name="ProbeContainer" type="Node3D" parent="player2/boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.76634, 0)
+
+[node name="Marker3D" type="Marker3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.7, 7)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+
+[node name="Marker3D2" type="Marker3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.7, -7)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D3" type="Marker3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.7, -7)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D4" type="Marker3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.7, 7)
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D5" type="Marker3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8252, 0.698596, -0.00635546)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, -0.81199)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D6" type="Marker3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D7" type="Marker3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6365, 0.7, 0)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="player2/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="AimingVisuals" parent="player2/boatBuoyancy/RigidBody3D" instance=ExtResource("7_nrdfo")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 3, -9)
+
+[node name="AimingVisuals2" parent="player2/boatBuoyancy/RigidBody3D" instance=ExtResource("7_nrdfo")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.006, 3, 9)
+
+[node name="player3" type="Node" parent="."]
+
+[node name="boatBuoyancy" type="Node3D" parent="player3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.5311, 98.8689)
+script = ExtResource("4_a6lh4")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="player3/boatBuoyancy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0885782, -1.64117, -3.36415)
+mass = 10.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -4, 0)
+script = ExtResource("8_gpc4n")
+
+[node name="Sketchfab_Scene" parent="player3/boatBuoyancy/RigidBody3D" instance=ExtResource("6_r3wt4")]
+
+[node name="CollisionShape3DHull" type="CollisionShape3D" parent="player3/boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9041, 0)
+shape = SubResource("BoxShape3D_sjkqo")
+
+[node name="CollisionShape3DMast" type="CollisionShape3D" parent="player3/boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.88587, 13.0331, 0)
+shape = SubResource("BoxShape3D_mfs2n")
+
+[node name="ProbeContainer" type="Node3D" parent="player3/boatBuoyancy/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.76634, 0)
+
+[node name="Marker3D" type="Marker3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.7, 7)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+
+[node name="Marker3D2" type="Marker3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.7, -7)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D3" type="Marker3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.7, -7)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D4" type="Marker3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.7, 7)
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D5" type="Marker3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8252, 0.698596, -0.00635546)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, -0.81199)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D6" type="Marker3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="Marker3D7" type="Marker3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6365, 0.7, 0)
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="player3/boatBuoyancy/RigidBody3D/ProbeContainer/Marker3D7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("SphereMesh_g53hq")
+skeleton = NodePath("../../Marker3D")
+
+[node name="AimingVisuals" parent="player3/boatBuoyancy/RigidBody3D" instance=ExtResource("7_nrdfo")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 3, -9)
+
+[node name="AimingVisuals2" parent="player3/boatBuoyancy/RigidBody3D" instance=ExtResource("7_nrdfo")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.006, 3, 9)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 298.099, 443.883, -288.046)
+light_energy = 1.528
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vf812")

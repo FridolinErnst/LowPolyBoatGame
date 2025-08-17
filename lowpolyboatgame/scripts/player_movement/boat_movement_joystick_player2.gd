@@ -2,7 +2,23 @@ extends RigidBody3D
 
 #this indicates the player or controller/device used for this script
 #positiv integer, should be the same as in script name
-@export var player_index = 1
+@export var player_index : int = 2
+
+enum InputType {
+	MOUSE_KEYBOARD, # 0
+	CONTROLLER,	 	# 1
+	TOUCH			# 2
+}
+
+signal input_type_changed(new_type)
+
+var current_input_type: InputType:
+	set(value):
+		if current_input_type != value:
+			current_input_type = value
+			input_type_changed.emit(value)
+	get:
+		return current_input_type
 
 @export var forward_force: float = 400.0 # how much force pushes it forward
 @export var backward_force: float = 80.0 # how much force pushes it backward
@@ -15,13 +31,41 @@ extends RigidBody3D
 @export var base_turning_speed: float = 0.7 # so boat can turn even when slow, but not when too slow
 @export var turning_speed_threshold: float = 0.027 # when boat is too slow deny turning
 
+## Called when there is an input event.
+func _input(event: InputEvent) -> void:
+
+	# Check if the input is a keyboard or mouse event
+	if event is InputEventKey or event is InputEventMouse:
+
+		# Set the current input type to Mouse and Keyboard
+		current_input_type = InputType.MOUSE_KEYBOARD
+
+	# Check if the input is a controller event
+	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+
+		# Set the current input type to Controller
+		current_input_type = InputType.CONTROLLER
+
+	# Check if the input is a touch event
+	elif event is InputEventScreenTouch or event is InputEventScreenDrag:
+
+		# Set the current input type to Touch
+		current_input_type = InputType.TOUCH
+
+
 func _physics_process(delta: float) -> void:
-	
-	# Forward / backwards
-	if Input.is_action_pressed("ui_up"): 
-		apply_central_force(global_transform.basis.x * forward_force)
-	elif Input.is_action_pressed("ui_down"): 
-		apply_central_force(global_transform.basis.x * -backward_force)
+	# Forward / backwards Input. if statement since we want to make the boat go faster forward than
+	# backwards, which we do not do when turning left or right further down
+	# only responds to device with according player_index. - is required since up and down would be flipped otherwise
+	# -1 since the devices are numbered starting at 0, but we want players to be numbered starting at 1
+	var Y_axis_input : float = -Input.get_joy_axis(player_index-1, JOY_AXIS_LEFT_Y)
+	if Y_axis_input > 0:
+		apply_central_force(global_transform.basis.x * forward_force * Y_axis_input)
+	if Y_axis_input < 0:
+		apply_central_force(global_transform.basis.x * -backward_force * Y_axis_input)
+	#elif Input.is_action_pressed("ui_down"): 
+	#	apply_central_force(global_transform.basis.x * -backward_force)
+
 
 	# Reduce sideways drift/slide
 	var forward_dir = global_transform.basis.x
@@ -50,12 +94,11 @@ func _physics_process(delta: float) -> void:
 	if moving_backward:
 		steer_dir = -1.0
 
-	if Input.is_action_pressed("ui_left"):
-		apply_torque(Vector3.UP * turn_torque * turning_speed * steer_dir)
-	elif Input.is_action_pressed("ui_right"):
-		apply_torque(Vector3.UP * -turn_torque * turning_speed * steer_dir)
+	#Left and Right input
+	# Input.get_joy_axis(player_index-1,JOY_AXIS_LEFT_X) returns a float between -1 and 1
+	# -1 when the left joystick points to the right and vice versa, which is why we need a minus in front
+	apply_torque(Vector3.UP * turn_torque * turning_speed * steer_dir * -Input.get_joy_axis(player_index-1,JOY_AXIS_LEFT_X))
 
 	# Apply drag (simulated water resistance)
 	apply_central_force(-linear_velocity * linear_drag)
 	apply_torque(-angular_velocity * angular_drag)
-	
