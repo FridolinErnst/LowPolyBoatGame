@@ -52,7 +52,7 @@ func _input(event: InputEvent) -> void:
 		# Set the current input type to Touch
 		current_input_type = InputType.TOUCH
 
-	
+
 func _physics_process(delta: float) -> void:
 
 	#here find a better solution or take the first input when joining the game and then
@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 		apply_central_force(global_transform.basis.x * forward_force * Y_axis_input)
 	if Y_axis_input < 0:
 		apply_central_force(global_transform.basis.x * -backward_force * Y_axis_input)
-	#elif Input.is_action_pressed("ui_down"): 
+	#elif Input.is_action_pressed("ui_down"):
 	#	apply_central_force(global_transform.basis.x * -backward_force)
 
 
@@ -80,19 +80,19 @@ func _physics_process(delta: float) -> void:
 	var side_speed = right_dir.dot(linear_velocity)
 	#linear_velocity = forward_dir * forward_speed + right_dir * side_speed * side_resistance
 	apply_central_force(-right_dir * side_speed * slide_resistance)
-	
-	
-		# Turning 
+
+
+		# Turning
 		# consists of base turning speed and inverse scaling part dependant on velocity
 		# deny turning when too slow
 	var speed_factor: float = clamp(max_turn_boost_speed / linear_velocity.length(), 0.0, 1.0)
 	var turning_speed: float = base_turning_speed + speed_factor * turning_responsiveness
 	var max_turning_speed: float = base_turning_speed + 1 * turning_responsiveness
-	
+
 	# so boat can turn even when slow, but not when too slow
 	if max_turning_speed - turning_speed < turning_speed_threshold:
 		turning_speed = 0.0
-	
+
 	# we need this because torque depends on global axis and therefore we need to reverse it when
 	# going backwards
 	var moving_backward = forward_dir.dot(linear_velocity) < 0
@@ -108,12 +108,12 @@ func _physics_process(delta: float) -> void:
 	# Apply drag (simulated water resistance)
 	apply_central_force(-linear_velocity * linear_drag)
 	apply_torque(-angular_velocity * angular_drag)
-	
+
 func handle_mouse_keyboard_input() -> void:
 	# Forward / backwards
-	if Input.is_action_pressed("ui_up"): 
+	if Input.is_action_pressed("ui_up"):
 		apply_central_force(global_transform.basis.x * forward_force)
-	elif Input.is_action_pressed("ui_down"): 
+	elif Input.is_action_pressed("ui_down"):
 		apply_central_force(global_transform.basis.x * -backward_force)
 
 	# Reduce sideways drift/slide
@@ -123,19 +123,19 @@ func handle_mouse_keyboard_input() -> void:
 	var side_speed = right_dir.dot(linear_velocity)
 	#linear_velocity = forward_dir * forward_speed + right_dir * side_speed * side_resistance
 	apply_central_force(-right_dir * side_speed * slide_resistance)
-	
-	
-		# Turning 
+
+
+		# Turning
 		# consists of base turning speed and inverse scaling part dependant on velocity
 		# deny turning when too slow
 	var speed_factor: float = clamp(max_turn_boost_speed / linear_velocity.length(), 0.0, 1.0)
 	var turning_speed: float = base_turning_speed + speed_factor * turning_responsiveness
 	var max_turning_speed: float = base_turning_speed + 1 * turning_responsiveness
-	
+
 	# so boat can turn even when slow, but not when too slow
 	if max_turning_speed - turning_speed < turning_speed_threshold:
 		turning_speed = 0.0
-	
+
 	# we need this because torque depends on global axis and therefore we need to reverse it when
 	# going backwards
 	var moving_backward = forward_dir.dot(linear_velocity) < 0
@@ -151,4 +151,3 @@ func handle_mouse_keyboard_input() -> void:
 	# Apply drag (simulated water resistance)
 	apply_central_force(-linear_velocity * linear_drag)
 	apply_torque(-angular_velocity * angular_drag)
-	

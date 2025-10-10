@@ -39,48 +39,20 @@ func _ready():
 	last_aim_dir = aim_dir
 
 func _unhandled_input(event):
-	if event is InputEventMouseButton and event.pressed:
+	var tmp : bool = Input.is_joy_button_pressed(0, JOY_BUTTON_LEFT_SHOULDER)
+	var tmp2 : bool =  Input.is_joy_button_pressed(0, JOY_BUTTON_RIGHT_SHOULDER)
+
+	if (event is InputEventMouseButton and event.pressed):
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			active = !active
 			visible = active
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
+		elif event.button_index == MOUSE_BUTTON_RIGHT || tmp:
 			_shoot_cannonball()
-
-func _physics_process(delta):
-	var yaw_input := 0.0
-	var pitch_input := 0.0
-
-	if Input.is_action_pressed("move_left"): yaw_input -= 1
-	if Input.is_action_pressed("move_right"): yaw_input += 1
-	if Input.is_action_pressed("move_up"): pitch_input += 1
-	if Input.is_action_pressed("move_down"): pitch_input -= 1
-
-	if yaw_input != 0.0:
-		yaw += yaw_input * aim_speed * delta
-	else:
-		yaw = lerp(yaw, 0.0, recenter_speed * delta)
-
-	if pitch_input != 0.0:
-		pitch += pitch_input * aim_speed * delta
-	else:
-		pitch = lerp(pitch, deg_to_rad(default_pitch_deg), recenter_speed * delta)
-
-	yaw = clamp(yaw, -deg_to_rad(yaw_limit), deg_to_rad(yaw_limit))
-	pitch = clamp(pitch, -deg_to_rad(aim_down_limit), deg_to_rad(aim_up_limit))
-
-	var new_dir = Vector3(
-		cos(yaw) * cos(pitch),
-		sin(pitch),
-		sin(yaw) * cos(pitch)
-	).normalized()
-
-	if last_aim_dir != Vector3.ZERO:
-		var eps_rad = deg_to_rad(aim_update_epsilon_deg)
-		if new_dir.dot(last_aim_dir) >= cos(eps_rad):
-			return
-
-	set_aim_direction(new_dir)
-	last_aim_dir = new_dir
+	if tmp:
+		active = !active
+		visible = active
+	if tmp2:
+		_shoot_cannonball()
 
 func set_aim_direction(dir: Vector3):
 	aim_dir = dir.normalized()
@@ -210,7 +182,7 @@ func _shoot_cannonball():
 	if cannonball_scene == null:
 		push_error("Cannonball scene not assigned!")
 		return
-	
+
 	var num_cannons = 5
 	var spacing = 2.0
 	var max_delay = 0.2

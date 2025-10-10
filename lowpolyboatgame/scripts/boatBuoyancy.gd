@@ -36,7 +36,7 @@ func _physics_process(delta):
 		if depth > 0:
 			submerged = true
 			apply_buoyancy_force(p, depth)
-	
+
 func update_wave_parameters():
 	if water_plane == null:
 		return
@@ -49,7 +49,7 @@ func update_wave_parameters():
 	wave_b_dir = water_material.get_shader_parameter("wave_b_dir")
 	wave_c = water_material.get_shader_parameter("wave_c")
 	wave_c_dir = water_material.get_shader_parameter("wave_c_dir")
-	
+
 func get_gerstner_wave_height(wave, wave_dir, position, time):
 	var amplitude = wave.x
 	var steepness = wave.y
