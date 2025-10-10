@@ -1,6 +1,6 @@
 # Pirate Ship Prototype
 
-![Pirate Ships](./fighting scene.png)
+![Pirate Ships](./fighting%20scene.png)
 
 ## ⚓ Overview
 
